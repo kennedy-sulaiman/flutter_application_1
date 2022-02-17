@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'farm-house-desc.dart';
+import 'TourismPlace.dart';
 
 class DetailScreen extends StatelessWidget {
+  final TourismPlace place;
+
+  DetailScreen({required this.place});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,13 +14,44 @@ class DetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Image.asset(
-              'images/farm-house.jpg',
+            Stack(
+              children: [
+                Image.asset(
+                  place.imageAsset,
+                ),
+                SafeArea(
+                    child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            color: Colors.white,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            }),
+                      ),
+                      FavoriteIcon()
+                    ],
+                  ),
+                ))
+              ],
             ),
-            _NameOfPlace(),
-            _Information(),
-            _Description(),
-            _ListViewPicture()
+            _NameOfPlace(
+              place: place,
+            ),
+            _Information(
+              place: place,
+            ),
+            _Description(
+              place: place,
+            ),
+            _ListViewPicture(
+              place: place,
+            )
           ],
         ),
       )),
@@ -25,12 +60,14 @@ class DetailScreen extends StatelessWidget {
 }
 
 class _NameOfPlace extends StatelessWidget {
+  final TourismPlace place;
+  _NameOfPlace({required this.place});
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Center(
         child: Text(
-          "Farm House Lembang",
+          place.name,
           style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
         ),
       ),
@@ -40,6 +77,8 @@ class _NameOfPlace extends StatelessWidget {
 }
 
 class _Information extends StatelessWidget {
+  final TourismPlace place;
+  _Information({required this.place});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -51,21 +90,21 @@ class _Information extends StatelessWidget {
             children: [
               Icon(Icons.calendar_today),
               SizedBox(height: 8.0),
-              Text("Open Everyday")
+              Text(place.openDays)
             ],
           ),
           Column(
             children: [
               Icon(Icons.schedule),
               SizedBox(height: 8.0),
-              Text("09:00 - 20:00")
+              Text(place.openTime)
             ],
           ),
           Column(
             children: [
               Icon(Icons.monetization_on),
               SizedBox(height: 8.0),
-              Text("Rp 25.000 / orang")
+              Text(place.ticketPrice)
             ],
           )
         ],
@@ -75,15 +114,23 @@ class _Information extends StatelessWidget {
 }
 
 class _Description extends StatelessWidget {
+  final TourismPlace place;
+  _Description({required this.place});
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: EdgeInsets.only(left: 50, right: 50, top: 20, bottom: 20),
-        child: FarmHouseDescription());
+        child: Text(
+          place.description,
+          textAlign: TextAlign.justify,
+          style: TextStyle(fontSize: 20),
+        ));
   }
 }
 
 class _ListViewPicture extends StatelessWidget {
+  final TourismPlace place;
+  _ListViewPicture({required this.place});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -96,25 +143,42 @@ class _ListViewPicture extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                    'https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/59/70/farmhouse-lembang.jpg')),
+                child: Image.network(place.imageUrls[0])),
           ),
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                    'https://media-cdn.tripadvisor.com/media/photo-w/13/f0/22/f6/photo3jpg.jpg')),
+                child: Image.network(place.imageUrls[1])),
           ),
           Padding(
               padding: const EdgeInsets.all(4.0),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
-                    'https://media-cdn.tripadvisor.com/media/photo-m/1280/16/a9/33/43/liburan-di-farmhouse.jpg'),
+                child: Image.network(place.imageUrls[2]),
               ))
         ],
       ),
     );
+  }
+}
+
+class FavoriteIcon extends StatefulWidget {
+  @override
+  State<FavoriteIcon> createState() => _FavoriteIconState();
+}
+
+class _FavoriteIconState extends State<FavoriteIcon> {
+  bool _isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+        icon: Icon(_isFavorite ? Icons.favorite : Icons.favorite_border),
+        onPressed: () {
+          setState(() {
+            _isFavorite = !_isFavorite;
+          });
+        });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'DetailScreen.dart';
+import 'HomeScreen.dart';
 
 void main(List<String> args) {
   runApp(MyVacationApp());
@@ -14,27 +15,27 @@ class MyVacationApp extends StatelessWidget {
         fontFamily: 'Oswald',
         primarySwatch: Colors.green,
       ),
-      home: DetailScreen(),
+      home: HomeScreen(),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Tempat Liburan Bandung"),
-      ),
-      body: Column(
-        children: [
-          Image.asset(
-            'images/bosscha.jpg',
-            width: 200,
-            height: 300 ,
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class HomeScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text("Tempat Liburan Bandung"),
+//       ),
+//       body: Column(
+//         children: [
+//           Image.asset(
+//             'images/bosscha.jpg',
+//             width: 200,
+//             height: 300 ,
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
