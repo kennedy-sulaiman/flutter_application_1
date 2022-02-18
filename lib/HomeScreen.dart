@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/DetailScreen.dart';
-import 'package:flutter_application_1/TourismPlace.dart';
+import 'package:fp1_wisata_bandung/DetailScreen.dart';
+import 'package:fp1_wisata_bandung/TourismPlace.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
